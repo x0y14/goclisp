@@ -3,7 +3,7 @@ package tokenize
 type TokenKind int
 
 const (
-	Illegal TokenKind = iota
+	_ TokenKind = iota
 	Eof
 	Reserved
 	Ident
