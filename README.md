@@ -4,6 +4,10 @@
 
 Common Lisp interpreter written in go.
 
+### how to use
+```shell
+$ go run ./cmd/goclisp/main.go
+```
 
 ### features
 - [x] add
