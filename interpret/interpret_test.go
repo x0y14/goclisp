@@ -81,6 +81,36 @@ func TestInterpret(t *testing.T) {
 			"(+ (+ 1 1) (+ 2 2) (+ 3 3))",
 			[]*atom.Atom{atom.NewAtomI(12)},
 		},
+		{
+			"sub int int",
+			"(- 3 2)",
+			[]*atom.Atom{atom.NewAtomI(1)},
+		},
+		{
+			"sub int float",
+			"(- 3 2.0)",
+			[]*atom.Atom{atom.NewAtomF(1)},
+		},
+		{
+			"mul int int",
+			"(* 5 2)",
+			[]*atom.Atom{atom.NewAtomI(10)},
+		},
+		{
+			"mul int float",
+			"(* 5 2.0)",
+			[]*atom.Atom{atom.NewAtomF(10)},
+		},
+		{
+			"div int int",
+			"(/ 100 10)",
+			[]*atom.Atom{atom.NewAtomI(10)},
+		},
+		{
+			"div int float",
+			"(/ 100 10.0)",
+			[]*atom.Atom{atom.NewAtomF(10)},
+		},
 	}
 
 	for _, tt := range tests {

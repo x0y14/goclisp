@@ -7,9 +7,9 @@ Common Lisp interpreter written in go.
 
 ### features
 - [x] add
-- [ ] sub
-- [ ] mul
-- [ ] div
+- [x] sub
+- [x] mul
+- [x] div
 - [ ] eq
 - [ ] ne
 - [ ] lt

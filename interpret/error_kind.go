@@ -8,6 +8,7 @@ const (
 	TypeMissMatchErr
 	UndefinedErr
 	UnimplementedErr
+	DivideByZeroErr
 )
 
 var errorKind = [...]string{
@@ -15,6 +16,7 @@ var errorKind = [...]string{
 	TypeMissMatchErr: "TypeMissMatchErr",
 	UndefinedErr:     "UndefinedErr",
 	UnimplementedErr: "Unimplemented",
+	DivideByZeroErr:  "DivideByZero",
 }
 
 func (r RuntimeErrorKind) String() string {
