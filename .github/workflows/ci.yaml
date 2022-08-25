@@ -12,3 +12,4 @@ jobs:
       - run: |
           go test ./tokenize
           go test ./parse
+          go test ./interpret
