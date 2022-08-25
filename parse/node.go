@@ -1,50 +1,52 @@
 package parse
 
+import "github.com/x0y14/goclisp/atom"
+
 type Node struct {
 	Kind      NodeKind
 	Arguments []*Node
-
-	Num float64 // int, floatの場合に値が入る
-	Str string  // ident, stringの場合に値が入る
+	Value     *atom.Atom
 }
 
 func NewNodeString(str string) *Node {
 	return &Node{
-		Kind: String,
-		Str:  str,
+		Kind:  String,
+		Value: atom.NewAtomString(str),
 	}
 }
 
 func NewNodeFloat(num float64) *Node {
 	return &Node{
-		Kind: Float,
-		Num:  num,
+		Kind:  Float,
+		Value: atom.NewAtomF(num),
 	}
 }
 
 func NewNodeInt(num float64) *Node {
 	return &Node{
-		Kind: Int,
-		Num:  num,
+		Kind:  Int,
+		Value: atom.NewAtomI(int(num)),
 	}
 }
 
 func NewNodeTrue() *Node {
 	return &Node{
-		Kind: True,
+		Kind:  True,
+		Value: atom.NewAtomTrue(),
 	}
 }
 
 func NewNodeNil() *Node {
 	return &Node{
-		Kind: Nil,
+		Kind:  Nil,
+		Value: atom.NewAtomNil(),
 	}
 }
 
 func NewNodeIdent(ident string) *Node {
 	return &Node{
-		Kind: Ident,
-		Str:  ident,
+		Kind:  Ident,
+		Value: atom.NewAtomIdent(ident),
 	}
 }
 

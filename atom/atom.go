@@ -1,9 +1,9 @@
-package interpret
+package atom
 
 import "fmt"
 
 type Atom struct {
-	Kind AtomKind
+	Kind Kind
 
 	NumF float64
 	NumI int
@@ -53,4 +53,8 @@ func NewAtomTrue() *Atom {
 
 func NewAtomNil() *Atom {
 	return &Atom{Kind: Nil}
+}
+
+func NewAtomIdent(str string) *Atom {
+	return &Atom{Kind: Ident, Str: str}
 }
