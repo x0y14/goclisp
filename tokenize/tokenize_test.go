@@ -114,7 +114,7 @@ func TestTokenize(t *testing.T) {
 		},
 		{
 			"plus",
-			"(+ 2.2 -30.0)",
+			"(+ 2.2 -30..0)",
 			&Token{
 				Kind:     Reserved,
 				Position: NewL1Position(len("")),
@@ -163,7 +163,10 @@ func TestTokenize(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tok := Tokenize(tt.in)
+			tok, err := Tokenize(tt.in)
+			if err != nil {
+				t.Fatal(err)
+			}
 			assert.Equal(t, tt.expect, tok)
 		})
 	}

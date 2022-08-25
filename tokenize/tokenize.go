@@ -1,7 +1,6 @@
 package tokenize
 
 import (
-	"log"
 	"strconv"
 	"strings"
 	"unicode"
@@ -104,7 +103,7 @@ func consumeNumber() string {
 	return numStr
 }
 
-func Tokenize(in string) *Token {
+func Tokenize(in string) (*Token, error) {
 	// initialize
 	userInput = []rune(in)
 	l = 1
@@ -168,16 +167,19 @@ userInputLoop:
 			numStr := consumeNumber()
 			num, err := strconv.ParseFloat(numStr, 64)
 			if err != nil {
-				log.Fatalf("[%d:%d] failed to parse number: %s", pos.LineNo, pos.LpBegin, numStr)
+				return nil, NewNumberParseError(pos, numStr, err)
 			}
 			cur = NewTokenNumber(cur, pos, num, numStr)
 			// lp, wp had increased by consumeNumber
 			continue
 		}
 
-		log.Fatalf("[%d:%d] unexpected charactor: %s", l, lp, string(userInput[wp]))
+		return nil, NewSyntaxError(
+			NewPosition(l, lp, wp),
+			"unexpected character",
+			string(userInput[wp]))
 	}
 
 	NewTokenEof(cur, NewPosition(l, lp, wp))
-	return head.Next
+	return head.Next, nil
 }
