@@ -22,7 +22,7 @@ func TestTokenize(t *testing.T) {
 				Kind:     Number,
 				Position: NewPosition(1, 0, 0),
 				Num:      1,
-				Str:      "",
+				Str:      "1",
 				Next: &Token{
 					Kind:     Reserved,
 					Position: NewPosition(1, 1, 1),
@@ -32,7 +32,7 @@ func TestTokenize(t *testing.T) {
 						Kind:     Number,
 						Position: NewPosition(1, 2, 2),
 						Num:      1,
-						Str:      "",
+						Str:      "1",
 						Next: &Token{
 							Kind:     Eof,
 							Position: NewPosition(1, 3, 3),
