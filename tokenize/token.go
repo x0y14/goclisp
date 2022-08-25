@@ -44,8 +44,14 @@ func NewTokenString(cur *Token, position *Position, str string) *Token {
 	return tok
 }
 
-func NewTokenNumber(cur *Token, position *Position, num float64, str string) *Token {
-	tok := NewToken(Number, position, num, str)
+func NewTokenFloat(cur *Token, position *Position, num float64, str string) *Token {
+	tok := NewToken(Float, position, num, str)
+	cur.Next = tok
+	return tok
+}
+
+func NewTokenInt(cur *Token, position *Position, num float64, str string) *Token {
+	tok := NewToken(Int, position, num, str)
 	cur.Next = tok
 	return tok
 }

@@ -19,7 +19,7 @@ func TestTokenize(t *testing.T) {
 			"wild plus",
 			"1+1",
 			&Token{
-				Kind:     Number,
+				Kind:     Int,
 				Position: NewPosition(1, 0, 0),
 				Num:      1,
 				Str:      "1",
@@ -29,7 +29,7 @@ func TestTokenize(t *testing.T) {
 					Num:      0,
 					Str:      "+",
 					Next: &Token{
-						Kind:     Number,
+						Kind:     Int,
 						Position: NewPosition(1, 2, 2),
 						Num:      1,
 						Str:      "1",
@@ -114,7 +114,7 @@ func TestTokenize(t *testing.T) {
 		},
 		{
 			"plus",
-			"(+ 2.2 -30..0)",
+			"(+ 2.2 -30.0)",
 			&Token{
 				Kind:     Reserved,
 				Position: NewL1Position(len("")),
@@ -126,7 +126,7 @@ func TestTokenize(t *testing.T) {
 					Num:      0,
 					Str:      "+",
 					Next: &Token{
-						Kind:     Number,
+						Kind:     Float,
 						Position: NewL1Position(len("(+ ")),
 						Num:      2.2,
 						Str:      "2.2",
@@ -136,7 +136,7 @@ func TestTokenize(t *testing.T) {
 							Num:      0,
 							Str:      "-",
 							Next: &Token{
-								Kind:     Number,
+								Kind:     Float,
 								Position: NewL1Position(len("(+ 2.2 -")),
 								Num:      30,
 								Str:      "30.0",

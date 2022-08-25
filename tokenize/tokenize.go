@@ -161,7 +161,7 @@ userInputLoop:
 			continue
 		}
 
-		// Number
+		// Int, Float
 		if unicode.IsDigit(userInput[wp]) {
 			pos := NewPosition(l, lp, wp)
 			numStr := consumeNumber()
@@ -169,8 +169,12 @@ userInputLoop:
 			if err != nil {
 				return nil, NewNumberParseError(pos, numStr, err)
 			}
-			cur = NewTokenNumber(cur, pos, num, numStr)
-			// lp, wp had increased by consumeNumber
+			if strings.Contains(numStr, ".") {
+				cur = NewTokenFloat(cur, pos, num, numStr)
+			} else {
+				cur = NewTokenInt(cur, pos, num, numStr)
+			}
+			// lp, wp had increased by consume[Int, Float]
 			continue
 		}
 

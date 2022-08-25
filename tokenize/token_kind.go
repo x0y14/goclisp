@@ -8,5 +8,6 @@ const (
 	Reserved
 	Ident
 	String
-	Number
+	Int
+	Float
 )
