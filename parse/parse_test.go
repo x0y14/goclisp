@@ -41,7 +41,7 @@ func TestParse(t *testing.T) {
 			[]*Node{
 				NewNodeWithArgs(Call, []*Node{
 					NewNodeTrue(),
-					NewNodeString("\"hello, world\""),
+					NewNodeString("hello, world"),
 				}),
 			},
 		},

@@ -51,7 +51,7 @@ func TestTokenize(t *testing.T) {
 				Kind:     String,
 				Position: NewL1Position(0),
 				Num:      0,
-				Str:      "\"string\"",
+				Str:      "string",
 				Next: &Token{
 					Kind:     Eof,
 					Position: NewL1Position(len("\"string\"")),

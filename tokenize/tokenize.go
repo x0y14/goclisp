@@ -66,7 +66,7 @@ func consumeIdent() string {
 func consumeString() string {
 	var str string
 	// "
-	str += "\""
+	//str += "\""
 	lp++
 	wp++
 
@@ -85,7 +85,7 @@ func consumeString() string {
 	}
 
 	// "
-	str += "\""
+	//str += "\""
 	lp++
 	wp++
 	return str
