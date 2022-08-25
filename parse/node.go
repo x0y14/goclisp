@@ -1,56 +1,56 @@
 package parse
 
 type Node struct {
-	kind      NodeKind
-	arguments []*Node
+	Kind      NodeKind
+	Arguments []*Node
 
-	num float64 // int, floatの場合に値が入る
-	str string  // ident, stringの場合に値が入る
+	Num float64 // int, floatの場合に値が入る
+	Str string  // ident, stringの場合に値が入る
 }
 
 func NewNodeString(str string) *Node {
 	return &Node{
-		kind: String,
-		str:  str,
+		Kind: String,
+		Str:  str,
 	}
 }
 
 func NewNodeFloat(num float64) *Node {
 	return &Node{
-		kind: Float,
-		num:  num,
+		Kind: Float,
+		Num:  num,
 	}
 }
 
 func NewNodeInt(num float64) *Node {
 	return &Node{
-		kind: Int,
-		num:  num,
+		Kind: Int,
+		Num:  num,
 	}
 }
 
 func NewNodeTrue() *Node {
 	return &Node{
-		kind: True,
+		Kind: True,
 	}
 }
 
 func NewNodeNil() *Node {
 	return &Node{
-		kind: Nil,
+		Kind: Nil,
 	}
 }
 
 func NewNodeIdent(ident string) *Node {
 	return &Node{
-		kind: Ident,
-		str:  ident,
+		Kind: Ident,
+		Str:  ident,
 	}
 }
 
 func NewNodeWithArgs(kind NodeKind, args []*Node) *Node {
 	return &Node{
-		kind:      kind,
-		arguments: args,
+		Kind:      kind,
+		Arguments: args,
 	}
 }
