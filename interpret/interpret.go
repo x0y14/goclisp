@@ -17,6 +17,10 @@ func add(node *parse.Node) (*atom.Atom, error) {
 		case parse.Float, parse.Int:
 			diff = arg.Value.Num
 			diffKind = arg.Value.Kind
+		case parse.String, parse.True, parse.Nil:
+			return nil, NewRuntimeError(TypeMissMatchErr, "the value type is not float or int")
+		case parse.Ident:
+			// todo
 		default:
 			a, err := exec(arg)
 			if err != nil {
