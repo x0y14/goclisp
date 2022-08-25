@@ -28,7 +28,7 @@ func Interpret(nodes []*parse.Node) error {
 	for _, node := range nodes {
 		v, err := exec(node)
 		if err != nil {
-			return nil
+			return err
 		}
 		fmt.Println(v.String())
 	}
