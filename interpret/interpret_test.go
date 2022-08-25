@@ -111,6 +111,67 @@ func TestInterpret(t *testing.T) {
 			"(/ 100 10.0)",
 			[]*atom.Atom{atom.NewAtomF(10)},
 		},
+		// logical op
+		{
+			"eq int int",
+			"(= 1 1)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"eq int float",
+			"(= 2 2.0)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"eq float float",
+			"(= 4.4 4.4)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"!eq int int",
+			"(= 1 99)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"!eq int float",
+			"(= 99 9000.0)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"!eq float float",
+			"(= 5.0 6.0)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"eq int int",
+			"(= 1 1)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"ne int float",
+			"(/= 2 2.0)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"ne float float",
+			"(/= 4.4 4.4)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"!ne int int",
+			"(/= 1 99)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"!ne int float",
+			"(/= 99 9000.0)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"!ne float float",
+			"(/= 5.0 6.0)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
 	}
 
 	for _, tt := range tests {

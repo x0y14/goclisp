@@ -10,8 +10,8 @@ Common Lisp interpreter written in go.
 - [x] sub
 - [x] mul
 - [x] div
-- [ ] eq
-- [ ] ne
+- [x] eq
+- [x] ne
 - [ ] lt
 - [ ] le
 - [ ] gt

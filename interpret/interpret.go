@@ -14,6 +14,9 @@ func exec(node *parse.Node) (*atom.Atom, error) {
 	// arithmetic op
 	case parse.Add, parse.Sub, parse.Mul, parse.Div:
 		return addSubMulDiv(node.Kind, node)
+	// logical op
+	case parse.Eq, parse.Ne:
+		return eqNe(node.Kind, node)
 	}
 
 	return nil, NewRuntimeError(
