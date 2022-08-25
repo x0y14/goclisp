@@ -5,9 +5,9 @@ import "fmt"
 type Atom struct {
 	Kind Kind
 
-	NumF float64
-	NumI int
-	Str  string
+	Num float64
+	//NumI int
+	Str string
 }
 
 func (a *Atom) String() string {
@@ -15,9 +15,9 @@ func (a *Atom) String() string {
 	case String:
 		return a.Str
 	case Float:
-		return fmt.Sprintf("%f", a.NumF)
+		return fmt.Sprintf("%f", a.Num)
 	case Int:
-		return fmt.Sprintf("%d", a.NumI)
+		return fmt.Sprintf("%d", int(a.Num))
 	case True:
 		return "T"
 	case Nil:
@@ -36,14 +36,14 @@ func NewAtomString(str string) *Atom {
 func NewAtomF(num float64) *Atom {
 	return &Atom{
 		Kind: Float,
-		NumF: num,
+		Num:  num,
 	}
 }
 
-func NewAtomI(num int) *Atom {
+func NewAtomI(num float64) *Atom {
 	return &Atom{
 		Kind: Int,
-		NumI: num,
+		Num:  num,
 	}
 }
 

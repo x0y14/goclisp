@@ -25,7 +25,7 @@ func NewNodeFloat(num float64) *Node {
 func NewNodeInt(num float64) *Node {
 	return &Node{
 		Kind:  Int,
-		Value: atom.NewAtomI(int(num)),
+		Value: atom.NewAtomI(num),
 	}
 }
 
