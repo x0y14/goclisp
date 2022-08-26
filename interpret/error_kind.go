@@ -9,6 +9,7 @@ const (
 	UndefinedErr
 	UnimplementedErr
 	DivideByZeroErr
+	AssignErr
 )
 
 var errorKind = [...]string{
@@ -17,6 +18,7 @@ var errorKind = [...]string{
 	UndefinedErr:     "UndefinedErr",
 	UnimplementedErr: "Unimplemented",
 	DivideByZeroErr:  "DivideByZero",
+	AssignErr:        "AssignErr",
 }
 
 func (r RuntimeErrorKind) String() string {

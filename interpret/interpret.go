@@ -19,6 +19,14 @@ func exec(node *parse.Node) (*data.Data, error) {
 		return eqNe(node)
 	case parse.Lt, parse.Le, parse.Gt, parse.Ge:
 		return ltLeGtGe(node)
+	case parse.Ident:
+		return globalLoad(node.Value.Atom.Str)
+	case parse.Call:
+		switch node.Value.Atom.Str {
+		case "format":
+		case "setq":
+			return setq(node)
+		}
 	}
 
 	return nil, NewRuntimeError(
