@@ -42,6 +42,6 @@ func NewDataNil() *Data {
 	return newAtomic(NewAtomNil())
 }
 
-func NewIdent(str string) *Data {
+func NewDataIdent(str string) *Data {
 	return newAtomic(NewAtomIdent(str))
 }

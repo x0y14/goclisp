@@ -39,7 +39,7 @@ func TestParse(t *testing.T) {
 			"hello world",
 			"(format t \"hello, world\")",
 			[]*Node{
-				NewNodeWithArgs(Call, []*Node{
+				NewNodeCall("format", []*Node{
 					NewNodeTrue(),
 					NewNodeString("hello, world"),
 				}),

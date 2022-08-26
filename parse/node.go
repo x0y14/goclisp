@@ -1,6 +1,8 @@
 package parse
 
-import "github.com/x0y14/goclisp/data"
+import (
+	"github.com/x0y14/goclisp/data"
+)
 
 type Node struct {
 	Kind      NodeKind
@@ -46,7 +48,7 @@ func NewNodeNil() *Node {
 func NewNodeIdent(ident string) *Node {
 	return &Node{
 		Kind:  Ident,
-		Value: data.NewIdent(ident),
+		Value: data.NewDataIdent(ident),
 	}
 }
 
@@ -54,5 +56,13 @@ func NewNodeWithArgs(kind NodeKind, args []*Node) *Node {
 	return &Node{
 		Kind:      kind,
 		Arguments: args,
+	}
+}
+
+func NewNodeCall(ident string, args []*Node) *Node {
+	return &Node{
+		Kind:      Call,
+		Arguments: args,
+		Value:     data.NewDataIdent(ident),
 	}
 }
