@@ -5,7 +5,7 @@ import (
 	"github.com/x0y14/goclisp/parse"
 )
 
-func addSubMulDiv(kind parse.NodeKind, node *parse.Node) (*atom.Atom, error) {
+func addSubMulDiv(node *parse.Node) (*atom.Atom, error) {
 	floatMode := false
 	var result float64 = 0
 
@@ -35,7 +35,7 @@ func addSubMulDiv(kind parse.NodeKind, node *parse.Node) (*atom.Atom, error) {
 		if i == 0 {
 			result = diff
 		} else {
-			switch kind {
+			switch node.Kind {
 			case parse.Add:
 				result += diff
 			case parse.Sub:

@@ -5,7 +5,7 @@ import (
 	"github.com/x0y14/goclisp/parse"
 )
 
-func eqNe(kind parse.NodeKind, node *parse.Node) (*atom.Atom, error) {
+func eqNe(node *parse.Node) (*atom.Atom, error) {
 	var base float64
 	for i, arg := range node.Arguments {
 		// type check
@@ -18,11 +18,11 @@ func eqNe(kind parse.NodeKind, node *parse.Node) (*atom.Atom, error) {
 			continue
 		}
 
-		if kind == parse.Eq && base != arg.Value.Num {
+		if node.Kind == parse.Eq && base != arg.Value.Num {
 			return atom.NewAtomNil(), nil
 		}
 
-		if kind == parse.Ne && base == arg.Value.Num {
+		if node.Kind == parse.Ne && base == arg.Value.Num {
 			return atom.NewAtomNil(), nil
 		}
 	}
