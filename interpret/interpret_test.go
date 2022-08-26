@@ -172,6 +172,147 @@ func TestInterpret(t *testing.T) {
 			"(/= 5.0 6.0)",
 			[]*atom.Atom{atom.NewAtomTrue()},
 		},
+
+		{
+			"lt int int",
+			"(< 2 5)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"lt int int",
+			"(< 20 5)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"lt int float",
+			"(< 2 5.2)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"lt int float",
+			"(< 20 5.99)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"lt float float",
+			"(< 2.1 5.0)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"lt float float",
+			"(< 20.0 5.900909)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"lt same int int",
+			"(< 2 2)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"le int int",
+			"(<= 2 5)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"le int int",
+			"(<= 20 5)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"le int float",
+			"(<= 2 5.2)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"le int float",
+			"(<= 20 5.99)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"le float float",
+			"(<= 2.1 5.0)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"le float float",
+			"(<= 20.0 5.900909)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"le same int int",
+			"(<= 2 2)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"gt int int",
+			"(> 3 2)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"gt int float",
+			"(> 3 2.0)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"gt float float",
+			"(> 3.4 2.0)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"gt int int",
+			"(> 3 20)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"gt int float",
+			"(> 3 23.0)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"gt float float",
+			"(> 3.4 2545.0)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"ge int int",
+			"(>= 3 2)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"ge int float",
+			"(>= 3 2.0)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"ge float float",
+			"(>= 3.4 2.0)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"ge float int",
+			"(>= 3.0 3)",
+			[]*atom.Atom{atom.NewAtomTrue()},
+		},
+		{
+			"ge int int",
+			"(>= 3 20)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"ge int float",
+			"(>= 3 21.0)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"ge float float",
+			"(>= 3.4 23.0)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
+		{
+			"ge float int",
+			"(>= 3.0 332323232)",
+			[]*atom.Atom{atom.NewAtomNil()},
+		},
 	}
 
 	for _, tt := range tests {

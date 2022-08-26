@@ -17,6 +17,8 @@ func exec(node *parse.Node) (*atom.Atom, error) {
 	// logical op
 	case parse.Eq, parse.Ne:
 		return eqNe(node)
+	case parse.Lt, parse.Le, parse.Gt, parse.Ge:
+		return ltLeGtGe(node)
 	}
 
 	return nil, NewRuntimeError(

@@ -16,8 +16,8 @@ $ go run ./cmd/goclisp/main.go
 - [x] div
 - [x] eq
 - [x] ne
-- [ ] lt
-- [ ] le
-- [ ] gt
-- [ ] ge
+- [x] lt
+- [x] le
+- [x] gt
+- [x] ge
 - [ ] std
