@@ -2,11 +2,11 @@ package interpret
 
 import (
 	"fmt"
-	"github.com/x0y14/goclisp/atom"
+	"github.com/x0y14/goclisp/data"
 	"github.com/x0y14/goclisp/parse"
 )
 
-func exec(node *parse.Node) (*atom.Atom, error) {
+func exec(node *parse.Node) (*data.Data, error) {
 	switch node.Kind {
 	// atom
 	case parse.String, parse.Float, parse.Int, parse.True, parse.Nil:

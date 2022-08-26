@@ -1,9 +1,9 @@
-package atom
+package data
 
 import "fmt"
 
 type Atom struct {
-	Kind Kind
+	Kind AtomKind
 
 	Num float64
 	//NumI int
