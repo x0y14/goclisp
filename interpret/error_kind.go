@@ -9,14 +9,18 @@ const (
 	UndefinedErr
 	UnimplementedErr
 	DivideByZeroErr
+	AssignErr
+	FunctionArgumentErr
 )
 
 var errorKind = [...]string{
-	UnknownErr:       "UnknownErr",
-	TypeMissMatchErr: "TypeMissMatchErr",
-	UndefinedErr:     "UndefinedErr",
-	UnimplementedErr: "Unimplemented",
-	DivideByZeroErr:  "DivideByZero",
+	UnknownErr:          "UnknownErr",
+	TypeMissMatchErr:    "TypeMissMatchErr",
+	UndefinedErr:        "UndefinedErr",
+	UnimplementedErr:    "Unimplemented",
+	DivideByZeroErr:     "DivideByZero",
+	AssignErr:           "AssignErr",
+	FunctionArgumentErr: "FunctionArgumentErr",
 }
 
 func (r RuntimeErrorKind) String() string {

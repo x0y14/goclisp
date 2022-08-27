@@ -2,11 +2,11 @@ package interpret
 
 import (
 	"fmt"
-	"github.com/x0y14/goclisp/atom"
+	"github.com/x0y14/goclisp/data"
 	"github.com/x0y14/goclisp/parse"
 )
 
-func exec(node *parse.Node) (*atom.Atom, error) {
+func exec(node *parse.Node) (*data.Data, error) {
 	switch node.Kind {
 	// atom
 	case parse.String, parse.Float, parse.Int, parse.True, parse.Nil:
@@ -19,6 +19,15 @@ func exec(node *parse.Node) (*atom.Atom, error) {
 		return eqNe(node)
 	case parse.Lt, parse.Le, parse.Gt, parse.Ge:
 		return ltLeGtGe(node)
+	case parse.Ident:
+		return globalLoad(node.Value.Atom.Str)
+	case parse.Call:
+		switch node.Value.Atom.Str {
+		case "format":
+			return format(node)
+		case "setq":
+			return setq(node)
+		}
 	}
 
 	return nil, NewRuntimeError(

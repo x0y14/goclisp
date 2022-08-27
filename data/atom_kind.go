@@ -1,9 +1,9 @@
-package atom
+package data
 
-type Kind int
+type AtomKind int
 
 const (
-	_ Kind = iota
+	_ AtomKind = iota
 	String
 	Float
 	Int

@@ -108,7 +108,7 @@ func stmt() (*Node, error) {
 		}
 
 		if oi.Kind == tokenize.Ident {
-			return NewNodeWithArgs(Call, args), nil
+			return NewNodeCall(oi.Str, args), nil
 		}
 		switch oi.Str {
 		case "+":

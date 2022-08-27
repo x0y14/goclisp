@@ -15,5 +15,5 @@ func NewRuntimeError(kind RuntimeErrorKind, msg string) *RuntimeError {
 }
 
 func (e *RuntimeError) Error() string {
-	return fmt.Sprintf("%s %s", e.Kind.String(), e.msg)
+	return fmt.Sprintf("%s: %s", e.Kind.String(), e.msg)
 }

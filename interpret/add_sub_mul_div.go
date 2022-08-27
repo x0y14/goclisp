@@ -1,21 +1,21 @@
 package interpret
 
 import (
-	"github.com/x0y14/goclisp/atom"
+	"github.com/x0y14/goclisp/data"
 	"github.com/x0y14/goclisp/parse"
 )
 
-func addSubMulDiv(node *parse.Node) (*atom.Atom, error) {
+func addSubMulDiv(node *parse.Node) (*data.Data, error) {
 	floatMode := false
 	var result float64 = 0
 
 	for i, arg := range node.Arguments {
 		var diff float64
-		var diffKind atom.Kind
+		var diffKind data.AtomKind
 		switch arg.Kind {
 		case parse.Float, parse.Int:
-			diff = arg.Value.Num
-			diffKind = arg.Value.Kind
+			diff = arg.Value.Atom.Num
+			diffKind = arg.Value.Atom.Kind
 		case parse.String, parse.True, parse.Nil:
 			return nil, NewRuntimeError(TypeMissMatchErr, "the value type is not float or int")
 		case parse.Ident:
@@ -25,10 +25,10 @@ func addSubMulDiv(node *parse.Node) (*atom.Atom, error) {
 			if err != nil {
 				return nil, err
 			}
-			diff = a.Num
-			diffKind = a.Kind
+			diff = a.Atom.Num
+			diffKind = a.Atom.Kind
 		}
-		if diffKind == atom.Float {
+		if diffKind == data.Float {
 			floatMode = true
 		}
 
@@ -52,7 +52,7 @@ func addSubMulDiv(node *parse.Node) (*atom.Atom, error) {
 	}
 
 	if floatMode {
-		return atom.NewAtomF(result), nil
+		return data.NewDataFloat(result), nil
 	}
-	return atom.NewAtomI(result), nil
+	return data.NewDataInt(result), nil
 }
