@@ -1,4 +1,4 @@
-package tokenize
+package data
 
 type Token struct {
 	Kind     TokenKind
@@ -21,37 +21,37 @@ func NewToken(kind TokenKind, position *Position, num float64, str string) *Toke
 }
 
 func NewTokenEof(cur *Token, position *Position) *Token {
-	tok := NewToken(Eof, position, 0, "")
+	tok := NewToken(TkEof, position, 0, "")
 	cur.Next = tok
 	return tok
 }
 
 func NewTokenReserved(cur *Token, position *Position, str string) *Token {
-	tok := NewToken(Reserved, position, 0, str)
+	tok := NewToken(TkReserved, position, 0, str)
 	cur.Next = tok
 	return tok
 }
 
 func NewTokenIdent(cur *Token, position *Position, str string) *Token {
-	tok := NewToken(Ident, position, 0, str)
+	tok := NewToken(TkIdent, position, 0, str)
 	cur.Next = tok
 	return tok
 }
 
 func NewTokenString(cur *Token, position *Position, str string) *Token {
-	tok := NewToken(String, position, 0, str)
+	tok := NewToken(TkString, position, 0, str)
 	cur.Next = tok
 	return tok
 }
 
 func NewTokenFloat(cur *Token, position *Position, num float64, str string) *Token {
-	tok := NewToken(Float, position, num, str)
+	tok := NewToken(TkFloat, position, num, str)
 	cur.Next = tok
 	return tok
 }
 
 func NewTokenInt(cur *Token, position *Position, num float64, str string) *Token {
-	tok := NewToken(Int, position, num, str)
+	tok := NewToken(TkInt, position, num, str)
 	cur.Next = tok
 	return tok
 }

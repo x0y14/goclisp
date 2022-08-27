@@ -1,14 +1,17 @@
 package tokenize
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/x0y14/goclisp/data"
+)
 
 type SyntaxError struct {
 	msg      string
 	Subject  string
-	Position *Position
+	Position *data.Position
 }
 
-func NewSyntaxError(position *Position, msg string, subject string) *SyntaxError {
+func NewSyntaxError(position *data.Position, msg string, subject string) *SyntaxError {
 	return &SyntaxError{
 		msg:      msg,
 		Subject:  subject,
@@ -23,10 +26,10 @@ func (e *SyntaxError) Error() string {
 type NumberParseError struct {
 	OriginalError  error
 	OriginalString string
-	Position       *Position
+	Position       *data.Position
 }
 
-func NewNumberParseError(position *Position, originalString string, err error) *NumberParseError {
+func NewNumberParseError(position *data.Position, originalString string, err error) *NumberParseError {
 	return &NumberParseError{
 		OriginalError:  err,
 		OriginalString: originalString,

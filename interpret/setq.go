@@ -2,13 +2,9 @@ package interpret
 
 import (
 	"github.com/x0y14/goclisp/data"
-	"github.com/x0y14/goclisp/parse"
 )
 
-func setq(storage *Storage, node *parse.Node) (*data.Data, error) {
-	if storage == nil {
-		storage = globalVariables
-	}
+func setq(scope *data.Storage, node *data.Node) (*data.Data, error) {
 	if len(node.Arguments)%2 != 0 {
 		return nil, NewRuntimeError(AssignErr, "the number of key and value does not matched")
 	}
@@ -22,13 +18,13 @@ func setq(storage *Storage, node *parse.Node) (*data.Data, error) {
 
 		// 評価する
 		value := node.Arguments[i]
-		v, err := eval(value)
+		v, err := eval(scope, value)
 		if err != nil {
 			return nil, err
 		}
 		i++
 
-		err = storeData(storage, key.Value.Atom.Str, v)
+		err = data.StoreData(scope, key.Value.Atom.Str, v)
 		if err != nil {
 			return nil, err
 		}

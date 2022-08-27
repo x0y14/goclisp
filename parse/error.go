@@ -2,15 +2,16 @@ package parse
 
 import (
 	"fmt"
-	"github.com/x0y14/goclisp/tokenize"
+
+	"github.com/x0y14/goclisp/data"
 )
 
 type SyntaxError struct {
-	Token *tokenize.Token
+	Token *data.Token
 	msg   string
 }
 
-func NewSyntaxError(msg string, tok *tokenize.Token) *SyntaxError {
+func NewSyntaxError(msg string, tok *data.Token) *SyntaxError {
 	return &SyntaxError{
 		Token: tok,
 		msg:   msg,
