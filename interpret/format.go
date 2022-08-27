@@ -42,9 +42,10 @@ func format(node *parse.Node) (*data.Data, error) {
 			i++
 		}
 	}
+
 	if printMode {
 		fmt.Printf(f+"\n", args...)
 		return data.NewDataNil(), nil
 	}
-	return data.NewDataString(fmt.Sprintf(f, args)), nil
+	return data.NewDataString(fmt.Sprintf(f, args...)), nil
 }
