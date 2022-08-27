@@ -5,7 +5,10 @@ import (
 	"github.com/x0y14/goclisp/parse"
 )
 
-func setq(node *parse.Node) (*data.Data, error) {
+func setq(storage *Storage, node *parse.Node) (*data.Data, error) {
+	if storage == nil {
+		storage = globalVariables
+	}
 	if len(node.Arguments)%2 != 0 {
 		return nil, NewRuntimeError(AssignErr, "the number of key and value does not matched")
 	}
@@ -15,7 +18,7 @@ func setq(node *parse.Node) (*data.Data, error) {
 		i++
 		value := node.Arguments[i]
 		i++
-		err := globalStore(key.Value.Atom.Str, value.Value)
+		err := storeData(storage, key.Value.Atom.Str, value.Value)
 		if err != nil {
 			return nil, err
 		}
