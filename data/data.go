@@ -14,6 +14,10 @@ func (d *Data) String() string {
 	panic("data is not printable")
 }
 
+func (d *Data) IsAtom() bool {
+	return d.Kind == Atomic
+}
+
 func newAtomic(atom *Atom) *Data {
 	return &Data{
 		Kind:     Atomic,
