@@ -32,7 +32,7 @@ func eval(node *parse.Node) (*data.Data, error) {
 		case "format":
 			return format(node)
 		case "setq":
-			return setq(nil, node)
+			return setq(globalVariables, node)
 		}
 	}
 

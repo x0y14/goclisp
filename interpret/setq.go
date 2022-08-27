@@ -6,9 +6,6 @@ import (
 )
 
 func setq(storage *data.Storage, node *parse.Node) (*data.Data, error) {
-	if storage == nil {
-		storage = globalVariables
-	}
 	if len(node.Arguments)%2 != 0 {
 		return nil, NewRuntimeError(AssignErr, "the number of key and value does not matched")
 	}
