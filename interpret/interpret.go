@@ -6,7 +6,7 @@ import (
 	"github.com/x0y14/goclisp/parse"
 )
 
-func exec(node *parse.Node) (*data.Data, error) {
+func eval(node *parse.Node) (*data.Data, error) {
 	switch node.Kind {
 	// atom
 	case parse.String, parse.Float, parse.Int, parse.True, parse.Nil:
@@ -37,7 +37,7 @@ func exec(node *parse.Node) (*data.Data, error) {
 
 func Interpret(nodes []*parse.Node) error {
 	for _, node := range nodes {
-		v, err := exec(node)
+		v, err := eval(node)
 		if err != nil {
 			return err
 		}

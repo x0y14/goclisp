@@ -21,7 +21,7 @@ func addSubMulDiv(node *parse.Node) (*data.Data, error) {
 		case parse.Ident:
 			// todo
 		default:
-			a, err := exec(arg)
+			a, err := eval(arg)
 			if err != nil {
 				return nil, err
 			}
