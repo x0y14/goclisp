@@ -24,6 +24,7 @@ func exec(node *parse.Node) (*data.Data, error) {
 	case parse.Call:
 		switch node.Value.Atom.Str {
 		case "format":
+			return format(node)
 		case "setq":
 			return setq(node)
 		}
