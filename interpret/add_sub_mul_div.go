@@ -2,17 +2,16 @@ package interpret
 
 import (
 	"github.com/x0y14/goclisp/data"
-	"github.com/x0y14/goclisp/parse"
 )
 
-func addSubMulDiv(node *parse.Node) (*data.Data, error) {
+func addSubMulDiv(scope *data.Storage, node *data.Node) (*data.Data, error) {
 	floatMode := false
 	var result float64 = 0
 
 	for i, arg := range node.Arguments {
 		var diff float64
 
-		val, err := eval(arg)
+		val, err := eval(scope, arg)
 		if err != nil {
 			return nil, err
 		}
@@ -30,13 +29,13 @@ func addSubMulDiv(node *parse.Node) (*data.Data, error) {
 			result = diff
 		} else {
 			switch node.Kind {
-			case parse.Add:
+			case data.NdAdd:
 				result += diff
-			case parse.Sub:
+			case data.NdSub:
 				result -= diff
-			case parse.Mul:
+			case data.NdMul:
 				result *= diff
-			case parse.Div:
+			case data.NdDiv:
 				if diff == 0 {
 					return nil, NewRuntimeError(DivideByZeroErr, "division by zero")
 				}

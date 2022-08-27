@@ -1,6 +1,7 @@
 package tokenize
 
 import (
+	"github.com/x0y14/goclisp/data"
 	"strconv"
 	"strings"
 	"unicode"
@@ -103,13 +104,13 @@ func consumeNumber() string {
 	return numStr
 }
 
-func Tokenize(in string) (*Token, error) {
+func Tokenize(in string) (*data.Token, error) {
 	// initialize
 	userInput = []rune(in)
 	l = 1
 	lp = 0
 	wp = 0
-	var head Token
+	var head data.Token
 	cur := &head
 
 userInputLoop:
@@ -129,11 +130,11 @@ userInputLoop:
 			continue
 		}
 
-		// Reserved
+		// TkReserved
 		// composite symbols
 		for _, comp := range reservedCompositeSymbols {
 			if startWith(comp) {
-				cur = NewTokenReserved(cur, NewPosition(l, lp, wp), comp)
+				cur = data.NewTokenReserved(cur, data.NewPosition(l, lp, wp), comp)
 				lp += len(comp)
 				wp += len(comp)
 				continue userInputLoop
@@ -141,49 +142,49 @@ userInputLoop:
 		}
 		// single symbols
 		if strings.ContainsRune(string(reservedSymbols), userInput[wp]) {
-			cur = NewTokenReserved(cur, NewPosition(l, lp, wp), string(userInput[wp]))
+			cur = data.NewTokenReserved(cur, data.NewPosition(l, lp, wp), string(userInput[wp]))
 			lp++
 			wp++
 			continue
 		}
 
-		// Ident
+		// TkIdent
 		if !unicode.IsDigit(userInput[wp]) && isIdentRune(userInput[wp]) {
-			cur = NewTokenIdent(cur, NewPosition(l, lp, wp), consumeIdent())
+			cur = data.NewTokenIdent(cur, data.NewPosition(l, lp, wp), consumeIdent())
 			// lp, wp had increased by consumeIdent.
 			continue
 		}
 
-		// String
+		// TkString
 		if '"' == userInput[wp] {
-			cur = NewTokenString(cur, NewPosition(l, lp, wp), consumeString())
+			cur = data.NewTokenString(cur, data.NewPosition(l, lp, wp), consumeString())
 			// lp, wp had increased by consumeString.
 			continue
 		}
 
-		// Int, Float
+		// TkInt, TkFloat
 		if unicode.IsDigit(userInput[wp]) {
-			pos := NewPosition(l, lp, wp)
+			pos := data.NewPosition(l, lp, wp)
 			numStr := consumeNumber()
 			num, err := strconv.ParseFloat(numStr, 64)
 			if err != nil {
 				return nil, NewNumberParseError(pos, numStr, err)
 			}
 			if strings.Contains(numStr, ".") {
-				cur = NewTokenFloat(cur, pos, num, numStr)
+				cur = data.NewTokenFloat(cur, pos, num, numStr)
 			} else {
-				cur = NewTokenInt(cur, pos, num, numStr)
+				cur = data.NewTokenInt(cur, pos, num, numStr)
 			}
-			// lp, wp had increased by consume[Int, Float]
+			// lp, wp had increased by consume[TkInt, TkFloat]
 			continue
 		}
 
 		return nil, NewSyntaxError(
-			NewPosition(l, lp, wp),
+			data.NewPosition(l, lp, wp),
 			"unexpected character",
 			string(userInput[wp]))
 	}
 
-	NewTokenEof(cur, NewPosition(l, lp, wp))
+	data.NewTokenEof(cur, data.NewPosition(l, lp, wp))
 	return head.Next, nil
 }

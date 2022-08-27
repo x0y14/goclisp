@@ -49,3 +49,11 @@ func NewDataNil() *Data {
 func NewDataIdent(str string) *Data {
 	return newAtomic(NewAtomIdent(str))
 }
+
+func NewDataFunc(f *Function) *Data {
+	return &Data{
+		Kind:     Fn,
+		Atom:     nil,
+		Function: f,
+	}
+}

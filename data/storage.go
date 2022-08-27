@@ -4,6 +4,12 @@ import (
 	"fmt"
 )
 
+var GlobalStorage *Storage
+
+func init() {
+	GlobalStorage = NewStorage()
+}
+
 type Storage map[string]*Data
 
 func NewStorage() *Storage {
@@ -21,6 +27,10 @@ func StoreData(storage *Storage, key string, value *Data) error {
 func LoadData(storage *Storage, key string) (*Data, error) {
 	v, ok := (*storage)[key]
 	if !ok {
+		gV, gOk := (*GlobalStorage)[key]
+		if gOk {
+			return gV, nil
+		}
 		return nil, fmt.Errorf("%s is not defined", key)
 	}
 	return v, nil

@@ -2,6 +2,7 @@ package parse
 
 import (
 	"github.com/stretchr/testify/assert"
+	"github.com/x0y14/goclisp/data"
 	"github.com/x0y14/goclisp/tokenize"
 	"testing"
 )
@@ -10,27 +11,27 @@ func TestParse(t *testing.T) {
 	tests := []struct {
 		name   string
 		in     string
-		expect []*Node
+		expect []*data.Node
 	}{
 		{
 			"1+2",
 			"(+ 1 2)",
-			[]*Node{
-				NewNodeWithArgs(Add, []*Node{
-					NewNodeInt(1),
-					NewNodeInt(2),
+			[]*data.Node{
+				data.NewNodeWithArgs(data.NdAdd, []*data.Node{
+					data.NewNodeInt(1),
+					data.NewNodeInt(2),
 				}),
 			},
 		},
 		{
 			"1+2*3",
 			"(+ 1 (* 2 3))",
-			[]*Node{
-				NewNodeWithArgs(Add, []*Node{
-					NewNodeInt(1),
-					NewNodeWithArgs(Mul, []*Node{
-						NewNodeInt(2),
-						NewNodeInt(3),
+			[]*data.Node{
+				data.NewNodeWithArgs(data.NdAdd, []*data.Node{
+					data.NewNodeInt(1),
+					data.NewNodeWithArgs(data.NdMul, []*data.Node{
+						data.NewNodeInt(2),
+						data.NewNodeInt(3),
 					}),
 				}),
 			},
@@ -38,25 +39,25 @@ func TestParse(t *testing.T) {
 		{
 			"hello world",
 			"(format t \"hello, world\")",
-			[]*Node{
-				NewNodeCall("format", []*Node{
-					NewNodeTrue(),
-					NewNodeString("hello, world"),
+			[]*data.Node{
+				data.NewNodeCall("format", []*data.Node{
+					data.NewNodeTrue(),
+					data.NewNodeString("hello, world"),
 				}),
 			},
 		},
 		{
 			"add 4",
 			"(+ 1 -2 3.3 4.0)",
-			[]*Node{
-				NewNodeWithArgs(Add, []*Node{
-					NewNodeInt(1),
-					NewNodeWithArgs(Sub, []*Node{
-						NewNodeInt(0),
-						NewNodeInt(2),
+			[]*data.Node{
+				data.NewNodeWithArgs(data.NdAdd, []*data.Node{
+					data.NewNodeInt(1),
+					data.NewNodeWithArgs(data.NdSub, []*data.Node{
+						data.NewNodeInt(0),
+						data.NewNodeInt(2),
 					}),
-					NewNodeFloat(3.3),
-					NewNodeFloat(4),
+					data.NewNodeFloat(3.3),
+					data.NewNodeFloat(4),
 				}),
 			},
 		},

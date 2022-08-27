@@ -1,19 +1,21 @@
 package parse
 
-import "github.com/x0y14/goclisp/tokenize"
+import (
+	"github.com/x0y14/goclisp/data"
+)
 
-var token *tokenize.Token
+var token *data.Token
 
 func consumeReserved(str string) bool {
-	if token.Kind != tokenize.Reserved || token.Str != str {
+	if token.Kind != data.TkReserved || token.Str != str {
 		return false
 	}
 	token = token.Next
 	return true
 }
 
-func consumeIdent() *tokenize.Token {
-	if token.Kind != tokenize.Ident {
+func consumeIdent() *data.Token {
+	if token.Kind != data.TkIdent {
 		return nil
 	}
 	tok := token
@@ -21,8 +23,8 @@ func consumeIdent() *tokenize.Token {
 	return tok
 }
 
-func consumeString() *tokenize.Token {
-	if token.Kind != tokenize.String {
+func consumeString() *data.Token {
+	if token.Kind != data.TkString {
 		return nil
 	}
 	tok := token
@@ -30,8 +32,8 @@ func consumeString() *tokenize.Token {
 	return tok
 }
 
-func consumeFloat() *tokenize.Token {
-	if token.Kind != tokenize.Float {
+func consumeFloat() *data.Token {
+	if token.Kind != data.TkFloat {
 		return nil
 	}
 	tok := token
@@ -39,8 +41,8 @@ func consumeFloat() *tokenize.Token {
 	return tok
 }
 
-func consumeInt() *tokenize.Token {
-	if token.Kind != tokenize.Int {
+func consumeInt() *data.Token {
+	if token.Kind != data.TkInt {
 		return nil
 	}
 	tok := token
@@ -48,8 +50,8 @@ func consumeInt() *tokenize.Token {
 	return tok
 }
 
-func consumeNil() *tokenize.Token {
-	if token.Kind != tokenize.Ident || (token.Str != "NIL" && token.Str != "nil") {
+func consumeNil() *data.Token {
+	if token.Kind != data.TkIdent || (token.Str != "NIL" && token.Str != "nil") {
 		return nil
 	}
 	tok := token
@@ -57,8 +59,8 @@ func consumeNil() *tokenize.Token {
 	return tok
 }
 
-func consumeTrue() *tokenize.Token {
-	if token.Kind != tokenize.Ident || (token.Str != "T" && token.Str != "t") {
+func consumeTrue() *data.Token {
+	if token.Kind != data.TkIdent || (token.Str != "T" && token.Str != "t") {
 		return nil
 	}
 	tok := token
@@ -66,8 +68,8 @@ func consumeTrue() *tokenize.Token {
 	return tok
 }
 
-func expectOpIdent() (*tokenize.Token, error) {
-	if token.Kind != tokenize.Reserved && token.Kind != tokenize.Ident {
+func expectOpIdent() (*data.Token, error) {
+	if token.Kind != data.TkReserved && token.Kind != data.TkIdent {
 		return nil, NewSyntaxError("unexpected token", token)
 	}
 	tok := token
@@ -76,11 +78,11 @@ func expectOpIdent() (*tokenize.Token, error) {
 }
 
 func atEof() bool {
-	return token.Kind == tokenize.Eof
+	return token.Kind == data.TkEof
 }
 
-func program() ([]*Node, error) {
-	var stmts []*Node
+func program() ([]*data.Node, error) {
+	var stmts []*data.Node
 	for !atEof() {
 		s, err := stmt()
 		if err != nil {
@@ -91,14 +93,14 @@ func program() ([]*Node, error) {
 	return stmts, nil
 }
 
-func stmt() (*Node, error) {
+func stmt() (*data.Node, error) {
 	if consumeReserved("(") {
 		oi, err := expectOpIdent()
 		if err != nil {
 			return nil, err
 		}
 
-		var args []*Node
+		var args []*data.Node
 		for !consumeReserved(")") {
 			arg, err := stmt()
 			if err != nil {
@@ -107,37 +109,37 @@ func stmt() (*Node, error) {
 			args = append(args, arg)
 		}
 
-		if oi.Kind == tokenize.Ident {
-			return NewNodeCall(oi.Str, args), nil
+		if oi.Kind == data.TkIdent {
+			return data.NewNodeCall(oi.Str, args), nil
 		}
 		switch oi.Str {
 		case "+":
-			return NewNodeWithArgs(Add, args), nil
+			return data.NewNodeWithArgs(data.NdAdd, args), nil
 		case "-":
-			return NewNodeWithArgs(Sub, args), nil
+			return data.NewNodeWithArgs(data.NdSub, args), nil
 		case "*":
-			return NewNodeWithArgs(Mul, args), nil
+			return data.NewNodeWithArgs(data.NdMul, args), nil
 		case "/":
-			return NewNodeWithArgs(Div, args), nil
+			return data.NewNodeWithArgs(data.NdDiv, args), nil
 		case "=":
-			return NewNodeWithArgs(Eq, args), nil
+			return data.NewNodeWithArgs(data.NdEq, args), nil
 		case "/=":
-			return NewNodeWithArgs(Ne, args), nil
+			return data.NewNodeWithArgs(data.NdNe, args), nil
 		case "<":
-			return NewNodeWithArgs(Lt, args), nil
+			return data.NewNodeWithArgs(data.NdLt, args), nil
 		case "<=":
-			return NewNodeWithArgs(Le, args), nil
+			return data.NewNodeWithArgs(data.NdLe, args), nil
 		case ">":
-			return NewNodeWithArgs(Gt, args), nil
+			return data.NewNodeWithArgs(data.NdGt, args), nil
 		case ">=":
-			return NewNodeWithArgs(Ge, args), nil
+			return data.NewNodeWithArgs(data.NdGe, args), nil
 		}
 
 	}
 	return unary()
 }
 
-func unary() (*Node, error) {
+func unary() (*data.Node, error) {
 	if consumeReserved("+") {
 		return primary()
 	} else if consumeReserved("-") {
@@ -148,31 +150,31 @@ func unary() (*Node, error) {
 		// floatとintが同じ式に入っていたら、floatが優先される(intがfloatにキャストされる)
 		// 1 + 2.0 = 3.0
 		// なので、int(0)を使えば、pがintの場合でも、floatの場合でもint(0)がキャストされるだけでpの型が変更されることはない
-		return NewNodeWithArgs(Sub, []*Node{NewNodeInt(0), p}), nil
+		return data.NewNodeWithArgs(data.NdSub, []*data.Node{data.NewNodeInt(0), p}), nil
 	}
 	return primary()
 }
 
-func primary() (*Node, error) {
-	var p *tokenize.Token
+func primary() (*data.Node, error) {
+	var p *data.Token
 	if p = consumeString(); p != nil {
-		return NewNodeString(p.Str), nil
+		return data.NewNodeString(p.Str), nil
 	} else if p = consumeFloat(); p != nil {
-		return NewNodeFloat(p.Num), nil
+		return data.NewNodeFloat(p.Num), nil
 	} else if p = consumeInt(); p != nil {
-		return NewNodeInt(p.Num), nil
+		return data.NewNodeInt(p.Num), nil
 	} else if p = consumeNil(); p != nil {
-		return NewNodeNil(), nil
+		return data.NewNodeNil(), nil
 	} else if p = consumeTrue(); p != nil {
-		return NewNodeTrue(), nil
+		return data.NewNodeTrue(), nil
 	} else if p = consumeIdent(); p != nil {
-		return NewNodeIdent(p.Str), nil
+		return data.NewNodeIdent(p.Str), nil
 	}
 
 	return nil, NewSyntaxError("unexpected token", token)
 }
 
-func Parse(tok *tokenize.Token) ([]*Node, error) {
+func Parse(tok *data.Token) ([]*data.Node, error) {
 	token = tok
 	return program()
 }

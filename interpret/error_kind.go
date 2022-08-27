@@ -11,6 +11,7 @@ const (
 	DivideByZeroErr
 	AssignErr
 	FunctionArgumentErr
+	AlreadyDefinedErr
 )
 
 var errorKind = [...]string{
@@ -21,6 +22,7 @@ var errorKind = [...]string{
 	DivideByZeroErr:     "DivideByZero",
 	AssignErr:           "AssignErr",
 	FunctionArgumentErr: "FunctionArgumentErr",
+	AlreadyDefinedErr:   "AlreadyDefinedErr",
 }
 
 func (r RuntimeErrorKind) String() string {

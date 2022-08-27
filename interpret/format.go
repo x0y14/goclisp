@@ -3,11 +3,10 @@ package interpret
 import (
 	"fmt"
 	"github.com/x0y14/goclisp/data"
-	"github.com/x0y14/goclisp/parse"
 	"strings"
 )
 
-func format(node *parse.Node) (*data.Data, error) {
+func format(scope *data.Storage, node *data.Node) (*data.Data, error) {
 	printMode := true
 	// arg[0] = true
 	// arg[1] = format
@@ -15,10 +14,10 @@ func format(node *parse.Node) (*data.Data, error) {
 	if len(node.Arguments) <= 1 {
 		return nil, NewRuntimeError(FunctionArgumentErr, "invalid number of argument")
 	}
-	if node.Arguments[0].Kind != parse.True && node.Arguments[0].Kind != parse.Nil {
+	if node.Arguments[0].Kind != data.NdTrue && node.Arguments[0].Kind != data.NdNil {
 		return nil, NewRuntimeError(UnimplementedErr, "format support T, NIL")
 	}
-	if node.Arguments[0].Kind == parse.Nil {
+	if node.Arguments[0].Kind == data.NdNil {
 		printMode = false
 	}
 
@@ -34,7 +33,7 @@ func format(node *parse.Node) (*data.Data, error) {
 	// t "%s" ?
 	if len(node.Arguments) >= 3 {
 		for i < len(node.Arguments) {
-			a, err := eval(node.Arguments[i])
+			a, err := eval(scope, node.Arguments[i])
 			if err != nil {
 				return nil, err
 			}

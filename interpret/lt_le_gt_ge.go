@@ -2,13 +2,12 @@ package interpret
 
 import (
 	"github.com/x0y14/goclisp/data"
-	"github.com/x0y14/goclisp/parse"
 )
 
-func ltLeGtGe(node *parse.Node) (*data.Data, error) {
+func ltLeGtGe(node *data.Node) (*data.Data, error) {
 	var base float64
 	for i, arg := range node.Arguments {
-		v, err := eval(arg)
+		v, err := eval(nil, arg)
 		if err != nil {
 			return nil, err
 		}
@@ -22,19 +21,19 @@ func ltLeGtGe(node *parse.Node) (*data.Data, error) {
 			continue
 		}
 
-		if node.Kind == parse.Lt && !(base < v.Atom.Num) {
+		if node.Kind == data.NdLt && !(base < v.Atom.Num) {
 			return data.NewDataNil(), nil
 		}
 
-		if node.Kind == parse.Le && !(base <= v.Atom.Num) {
+		if node.Kind == data.NdLe && !(base <= v.Atom.Num) {
 			return data.NewDataNil(), nil
 		}
 
-		if node.Kind == parse.Gt && !(base > v.Atom.Num) {
+		if node.Kind == data.NdGt && !(base > v.Atom.Num) {
 			return data.NewDataNil(), nil
 		}
 
-		if node.Kind == parse.Ge && !(base >= v.Atom.Num) {
+		if node.Kind == data.NdGe && !(base >= v.Atom.Num) {
 			return data.NewDataNil(), nil
 		}
 	}

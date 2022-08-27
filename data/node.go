@@ -1,54 +1,50 @@
-package parse
-
-import (
-	"github.com/x0y14/goclisp/data"
-)
+package data
 
 type Node struct {
 	Kind      NodeKind
 	Arguments []*Node
-	Value     *data.Data
+	Value     *Data
 }
 
 func NewNodeString(str string) *Node {
 	return &Node{
-		Kind:  String,
-		Value: data.NewDataString(str),
+		Kind:  NdString,
+		Value: NewDataString(str),
 	}
 }
 
 func NewNodeFloat(num float64) *Node {
 	return &Node{
-		Kind:  Float,
-		Value: data.NewDataFloat(num),
+		Kind:  NdFloat,
+		Value: NewDataFloat(num),
 	}
 }
 
 func NewNodeInt(num float64) *Node {
 	return &Node{
-		Kind:  Int,
-		Value: data.NewDataInt(num),
+		Kind:  NdInt,
+		Value: NewDataInt(num),
 	}
 }
 
 func NewNodeTrue() *Node {
 	return &Node{
-		Kind:  True,
-		Value: data.NewDataTrue(),
+		Kind:  NdTrue,
+		Value: NewDataTrue(),
 	}
 }
 
 func NewNodeNil() *Node {
 	return &Node{
-		Kind:  Nil,
-		Value: data.NewDataNil(),
+		Kind:  NdNil,
+		Value: NewDataNil(),
 	}
 }
 
 func NewNodeIdent(ident string) *Node {
 	return &Node{
-		Kind:  Ident,
-		Value: data.NewDataIdent(ident),
+		Kind:  NdIdent,
+		Value: NewDataIdent(ident),
 	}
 }
 
@@ -61,8 +57,8 @@ func NewNodeWithArgs(kind NodeKind, args []*Node) *Node {
 
 func NewNodeCall(ident string, args []*Node) *Node {
 	return &Node{
-		Kind:      Call,
+		Kind:      NdCall,
 		Arguments: args,
-		Value:     data.NewDataIdent(ident),
+		Value:     NewDataIdent(ident),
 	}
 }

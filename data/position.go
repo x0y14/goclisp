@@ -1,4 +1,4 @@
-package tokenize
+package data
 
 type Position struct {
 	LineNo  int // 1 <= n

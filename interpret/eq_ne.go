@@ -2,13 +2,12 @@ package interpret
 
 import (
 	"github.com/x0y14/goclisp/data"
-	"github.com/x0y14/goclisp/parse"
 )
 
-func eqNe(node *parse.Node) (*data.Data, error) {
+func eqNe(node *data.Node) (*data.Data, error) {
 	var base float64
 	for i, arg := range node.Arguments {
-		v, err := eval(arg)
+		v, err := eval(nil, arg)
 		if err != nil {
 			return nil, err
 		}
@@ -22,11 +21,11 @@ func eqNe(node *parse.Node) (*data.Data, error) {
 			continue
 		}
 
-		if node.Kind == parse.Eq && base != v.Atom.Num {
+		if node.Kind == data.NdEq && base != v.Atom.Num {
 			return data.NewDataNil(), nil
 		}
 
-		if node.Kind == parse.Ne && base == v.Atom.Num {
+		if node.Kind == data.NdNe && base == v.Atom.Num {
 			return data.NewDataNil(), nil
 		}
 	}
