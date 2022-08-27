@@ -14,11 +14,19 @@ func setq(storage *Storage, node *parse.Node) (*data.Data, error) {
 	}
 	i := 0
 	for i < len(node.Arguments) {
+		// 評価しない
 		key := node.Arguments[i]
 		i++
+
+		// 評価する
 		value := node.Arguments[i]
+		v, err := eval(value)
+		if err != nil {
+			return nil, err
+		}
 		i++
-		err := storeData(storage, key.Value.Atom.Str, value.Value)
+
+		err = storeData(storage, key.Value.Atom.Str, v)
 		if err != nil {
 			return nil, err
 		}
