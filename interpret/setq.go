@@ -5,7 +5,7 @@ import (
 	"github.com/x0y14/goclisp/parse"
 )
 
-func setq(storage *Storage, node *parse.Node) (*data.Data, error) {
+func setq(storage *data.Storage, node *parse.Node) (*data.Data, error) {
 	if storage == nil {
 		storage = globalVariables
 	}
@@ -28,7 +28,7 @@ func setq(storage *Storage, node *parse.Node) (*data.Data, error) {
 		}
 		i++
 
-		err = storeData(storage, key.Value.Atom.Str, v)
+		err = data.StoreData(storage, key.Value.Atom.Str, v)
 		if err != nil {
 			return nil, err
 		}
