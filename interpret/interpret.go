@@ -6,7 +6,13 @@ import (
 	"github.com/x0y14/goclisp/parse"
 )
 
-func exec(node *parse.Node) (*data.Data, error) {
+var globalVariables *Storage
+
+func init() {
+	globalVariables = NewStorage()
+}
+
+func eval(node *parse.Node) (*data.Data, error) {
 	switch node.Kind {
 	// atom
 	case parse.String, parse.Float, parse.Int, parse.True, parse.Nil:
@@ -20,13 +26,13 @@ func exec(node *parse.Node) (*data.Data, error) {
 	case parse.Lt, parse.Le, parse.Gt, parse.Ge:
 		return ltLeGtGe(node)
 	case parse.Ident:
-		return globalLoad(node.Value.Atom.Str)
+		return loadData(globalVariables, node.Value.Atom.Str)
 	case parse.Call:
 		switch node.Value.Atom.Str {
 		case "format":
 			return format(node)
 		case "setq":
-			return setq(node)
+			return setq(nil, node)
 		}
 	}
 
@@ -37,7 +43,7 @@ func exec(node *parse.Node) (*data.Data, error) {
 
 func Interpret(nodes []*parse.Node) error {
 	for _, node := range nodes {
-		v, err := exec(node)
+		v, err := eval(node)
 		if err != nil {
 			return err
 		}

@@ -34,7 +34,7 @@ func format(node *parse.Node) (*data.Data, error) {
 	// t "%s" ?
 	if len(node.Arguments) >= 3 {
 		for i < len(node.Arguments) {
-			a, err := exec(node.Arguments[i])
+			a, err := eval(node.Arguments[i])
 			if err != nil {
 				return nil, err
 			}

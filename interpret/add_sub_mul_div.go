@@ -11,25 +11,19 @@ func addSubMulDiv(node *parse.Node) (*data.Data, error) {
 
 	for i, arg := range node.Arguments {
 		var diff float64
-		var diffKind data.AtomKind
-		switch arg.Kind {
-		case parse.Float, parse.Int:
-			diff = arg.Value.Atom.Num
-			diffKind = arg.Value.Atom.Kind
-		case parse.String, parse.True, parse.Nil:
-			return nil, NewRuntimeError(TypeMissMatchErr, "the value type is not float or int")
-		case parse.Ident:
-			// todo
-		default:
-			a, err := exec(arg)
-			if err != nil {
-				return nil, err
-			}
-			diff = a.Atom.Num
-			diffKind = a.Atom.Kind
+
+		val, err := eval(arg)
+		if err != nil {
+			return nil, err
 		}
-		if diffKind == data.Float {
+		switch val.Atom.Kind {
+		case data.Float:
+			diff = val.Atom.Num
 			floatMode = true
+		case data.Int:
+			diff = val.Atom.Num
+		default:
+			return nil, NewRuntimeError(TypeMissMatchErr, "the value type is not float or int")
 		}
 
 		if i == 0 {

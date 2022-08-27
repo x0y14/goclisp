@@ -326,7 +326,7 @@ func TestInterpret(t *testing.T) {
 				t.Fatal(err)
 			}
 			for i, node := range nodes {
-				v, err := exec(node)
+				v, err := eval(node)
 				if err != nil {
 					t.Fatal(err)
 				}
