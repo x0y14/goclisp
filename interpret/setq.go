@@ -13,6 +13,8 @@ func setq(storage *Storage, node *parse.Node) (*data.Data, error) {
 		return nil, NewRuntimeError(AssignErr, "the number of key and value does not matched")
 	}
 	i := 0
+	var result *data.Data
+
 	for i < len(node.Arguments) {
 		// 評価しない
 		key := node.Arguments[i]
@@ -30,7 +32,8 @@ func setq(storage *Storage, node *parse.Node) (*data.Data, error) {
 		if err != nil {
 			return nil, err
 		}
+		result = v
 	}
 	// return last one
-	return node.Arguments[i-1].Value, nil
+	return result, nil
 }
