@@ -71,6 +71,8 @@ func eval(scope *data.Storage, node *data.Node) (*data.Data, error) {
 				return nil, NewRuntimeError(AlreadyDefinedErr, fmt.Sprintf("%s is defined", name))
 			}
 			return defun(scope, node)
+		case "if":
+			return if_(scope, node)
 		default:
 			name := node.Value.Atom.Str
 			f, err := data.LoadData(scope, name)
