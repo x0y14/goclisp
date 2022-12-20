@@ -30,6 +30,9 @@ $ a -> 1
 
 $ (defun plus (x y) "func-description" (+ x y))
 $ (plus 1 2) -> 3
+
+$ (if (= 3 3) (format t "true!") (format t "false!"))
+-> true!
 ```
 
 
@@ -47,3 +50,4 @@ $ (plus 1 2) -> 3
 - [x] format
 - [x] setq
 - [x] defun
+- [x] if
